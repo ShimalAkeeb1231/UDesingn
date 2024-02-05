@@ -22,7 +22,23 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Category needed
+
+
+
+
+
+    Route::resource(
+        'user',
+        \App\Http\Controllers\CuserController::class
+    );
+    
+
+
 });
