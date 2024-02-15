@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,12 +28,14 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // Category needed
+    // Category 
+
+    Route::resource(
+    'product',
+    \App\Http\Controllers\ProductController::class);
 
 
-
-
-
+    // User 
     Route::resource(
         'user',
         \App\Http\Controllers\CuserController::class
