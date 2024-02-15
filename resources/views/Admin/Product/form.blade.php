@@ -13,11 +13,10 @@
                 </div>
 
                 <form method="post"
-                
                     @if($product->id)
-                    action="{{ route('product.update', $product->id) }}"
+                        action="{{ route('product.update', $product->id) }}"
                     @else
-                    action="{{ route('product.store') }}"
+                        action="{{ route('product.store') }}"
                     @endif
                     class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
 
@@ -46,7 +45,6 @@
                                         {{ $message }}
                                     </p>
                                 @enderror
-
                             </div>
 
                             <div class="col-span-full">
@@ -69,7 +67,7 @@
                             </div>
 
                             <div class="col-span-full">
-                                <label for="description" class="block text-sm font-medium leading-6 text-gray-900">
+                                <label for="price" class="block text-sm font-medium leading-6 text-gray-900">
                                     Price
                                 </label>
                                 <div class="mt-2">
@@ -87,45 +85,30 @@
                                 @enderror
                             </div>
 
-
-
-
                             <div class="col-span-full">
-                            <div class="col-span-full">
-                            <div class="col-span-full">
-                                <label for="role" class="block text-sm font-medium leading-6 text-gray-900">
+                                <label for="category" class="block text-sm font-medium leading-6 text-gray-900">
                                     Category
                                 </label>
                                 <div class="mt-2">
-                                <select id="Category" name="category"
-    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    @foreach ($categories as $category)
-        <option value="{{ $category }}"
-            {{ ($product && old('category', $product->category) == $category ? 'selected' : '') }}>
-            {{ ucwords($category) }}
-        </option>
-    @endforeach
-</select>
-
-
-
-
+                                    <select id="category" name="category"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        @foreach ($categories as $categoryValue)
+                                            <option value="{{ $categoryValue }}">
+                                                {{ (old('category', $product->category) == $categoryValue ? 'selected' : '') }}>
+                                                {{ ucwords($categoryValue) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 @error('category')
                                     <p class="mt-3 text-sm leading-6 text-red-600">
                                         {{ $message }}
                                     </p>
                                 @enderror
-                                
                             </div>
-
-    
-    
-</div>
-
-
                         </div>
                     </div>
+
                     <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
                         <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
                         <button type="submit"
@@ -133,7 +116,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </x-app-layout>

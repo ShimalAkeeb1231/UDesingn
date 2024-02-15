@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\StoreProductCategoryRequest;
+use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Enums\Category;
+use BenSampo\Enum\Rules\EnumValue;
+
 class ProductController extends Controller
 {
     /**
@@ -17,7 +19,6 @@ class ProductController extends Controller
             'products' => Product::paginate(10),
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -33,32 +34,20 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductCategoryRequest $request)
     {
-
         $validated = $request->validate([
-
-
-
             'name' => 'required',
-            'description' => 'required', 
+            'description' => 'required',
             'price' => 'required',
-            'category' => 'required'
-
+            'category' => [
+                'required',
+                new EnumValue(Category::class),
+            ],
         ]);
-        
-        
-        Product::create($validated);
-        //dd ($validated);
-        return redirect()->route('product.index')->with('success', 'Product created successfully!');
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
+        Product::create($validated);
+        return redirect()->route('product.index')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -68,24 +57,27 @@ class ProductController extends Controller
     {
         return view('Admin.Product.form', [
             'product' => $product,
-            'categories' => Category::cases(),
+            'categories' => Category::getValues(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductCategoryRequest $request, Product $product)
     {
         $validated = $request->validate([
             'name' => 'required',
-            'description' => 'required', 
+            'description' => 'required',
             'price' => 'required',
-            'category' => 'required'
+            'category' => [
+                'required',
+                new EnumValue(Category::class),
+            ],
         ]);
 
         $product->update($validated);
-        return redirect()->route('product.index')->with('success', 'product updated successfully!');
+        return redirect()->route('product.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -94,6 +86,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('product.index')->with('success', 'product deleted successfully!');
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
     }
 }
